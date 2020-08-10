@@ -1,37 +1,17 @@
-## Welcome to GitHub Pages
+# Mark E. Riley, PMP
+I have 20 years of management and technology consulting experience, primarily in the healthcare provider industry. My experience has included strategic planning, technology roadmap development, software evaluation and selection, software system implementation planning, software system implementation, IT governance, program and project management, data migration, data archiving, database design and development, custom software design development, and the software development life cycle (SDLC). I am certified Project Management Professional (PMP) from Project Management International (PMI).##
 
-You can use the [editor on GitHub](https://github.com/yelirkram/yelirkram.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+I am seeking a full-time job in the DC-metro area using my master's degree in data science and extensive healthcare technology management consulting career. I would prefer to work locally with up to 10% travel.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Professional Links
+[<img src="/images/LI-In-Bug.png" width=118 height=100>](https://www.linkedin.com/in/rileymark/)
+[<img src="/images/GitHub-Mark-120px-plus.png" width=100 height=100>](https://github.com/yelirkram)
 
-### Markdown
+## Education
+University of Wisconsin - La Crosse
+Master of Science - Data Science
+4.0 GPA
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+University of Wisconsin - Madison
+Bachelor of Business Administration - Information Systems Analysis & Design
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yelirkram/yelirkram.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.

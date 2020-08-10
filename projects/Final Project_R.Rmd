@@ -1,0 +1,106 @@
+---
+title: "Analysis of Tesla Autonomy Day Tweets Sentiment"
+author: "Mark Riley"
+date: "April 30, 2019"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Load required libraries
+require(dplyr)
+require(ggformula)
+require(readr)
+
+# Go Eagles!
+laxMaroon = "#830019"
+laxGray = "#969799"
+
+# Load the data from Python
+tesla <- read_csv("tesla_autonomy_tweets.csv")
+
+# Remove Tweets by Elon Musk and Tesla
+tesla <- 
+  tesla %>% 
+  filter(User != c("elonmusk", "Tesla"))
+
+# Summarize the data from the csv by sentiment (negative, neutral, positive)
+# and the number of tweets in each category
+tesla_sentiment <- 
+  tesla %>% 
+  select(Sentiment) %>% 
+  group_by(Sentiment) %>% 
+  summarise(TweetCount = n())
+
+# Get the tweet counts into a vector for the Chi-squared GOF test
+observed <- tesla_sentiment[["TweetCount"]]
+
+# The Null hypothesis is that the proportion of tweets is
+# equal between the three sentiments (negative, neutral, positive)
+# so I create a vector with three, one-thirds
+proportions <- rep(1/3, 3)
+
+# Conduct the Chi-squared GOF test, results in comments below
+result <- chisq.test(observed, p = proportions)
+
+# Chi-squared test for given probabilities
+# data:  observed
+# X-squared = 579.06, df = 2, p-value < 2.2e-16
+
+# Conduct a one-sample test or proportions
+positive <- tesla_sentiment$TweetCount[tesla_sentiment$Sentiment == "positive"]
+total <- sum(tesla_sentiment$TweetCount)
+
+proportion <- prop.test(positive, total, correct = FALSE)
+
+# 1-sample proportions test with continuity correction
+# data:  positive out of total, null probability 0.5
+# X-squared = 117.3, df = 1, p-value < 2.2e-16
+# alternative hypothesis: true p is not equal to 0.5
+# 95 percent confidence interval:
+#  0.6266584 0.6794702
+# sample estimates:
+#        p 
+# 0.653537 
+```
+
+# Introduction
+On April 22, 2019, Tesla held an event at its headquarters in Palo Alto, CA dubbed, "Tesla Autonomy Investor Day." The purpose of the event was to showcase and demonstrate Tesla's progress in developing autonomous driving software and hardware, and its autonomous driving technology roadmap. Investors and members of the media were invited to attend in person, and the event was streamed live over the internet. For later viewing, Tesla made a recording of the event available at https://livestream.tesla.com/. Telsa also made a time-lapse video demonstration of a Tesla Model 3 performing full autonomous self-driving that was shown at the event available for viewing at https://youtu.be/tlThdr3O5Qo.
+
+Many car makers are rushing to catch up to Tesla by introducing electric cars with self-driving technology, as well as technology companies like Waymo also doing research in this area. Knowing people's sentiments after seeing a demonstration of Tesla's capabilities could help Tesla's competitors know what features to prioritize and how they may want to roll out their own products. It could also help Tesla plan for how they will introduce additional autonomous driving capabilities as they continue to make further progress.
+
+# Data Collection and Analysis
+We collected data using Python software and Twitter's Rest API. The search parameters included tweets in the English language, containing the words "Tesla Autonomy," and excluding retweets. Tweets were collected over the six days following the event.
+
+Following collection, duplicate tweets were removed based on the text of the tweet. We then determined the sentiment of each tweet (postive, negative, neutral) using the TextBlob sentiment analysis algorithm. The resulting dataset was exported to a file for further cleaning and statistical analysis in the software, R. 
+
+Once in R tweets from Tesla and its CEO Elon Musk were removed from the dataset. The final dataset for statistical analysis included 1,244 tweets.
+
+Our hypothesis was that sentiment will be evenly divided between those who are enthusiastic about the technology (positive sentiment), those who are skeptical about the technology (negative sentiment), and those who are neutral (e.g. reporting the event happened). 
+$$H_0: \pi_\mbox{positive} = \pi_\mbox{negative} = \pi_\mbox{neutral}$$
+$$H_a: \mbox{At least one } \pi_i \mbox{ differs from its hypothesized value}$$
+We performed a chi-squared goodness fit test to determine if the distribution of the sentiments were equal. With 95% confidence, there is sufficient evidence to reject the hypothesis that the distribution of sentiments were equal (P < 0.0001). 
+
+We further performed a one-sample test of proportions to determine the proportion of tweets that are positive. As you can see in Figure 1, it appears that a majority of tweets were positive. We are 95% confident that between 62.7% and 67.9% of all tweets about Tesla Autonomy Investor Day were positive.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+tesla %>% 
+  select(Date, Sentiment) %>% 
+  mutate(Day = format(Date, "%B %d")) %>% 
+  gf_bar( ~ Day, fill = ~ Sentiment, position = position_dodge()) %>% 
+  gf_refine(scale_fill_manual(values = c(laxMaroon, laxGray, "dark green"))) %>% 
+  gf_labs(
+    title = "Number of Tesla Autonomy Tweets\nby Day and Sentiment",
+    y = "Number of Tweets" 
+  )
+```
+
+#### Figure 1
+
+# Results/Conclusion
+There is statistically significant evidence that the majority of tweets about Tesla Autonomy Investor Day were positive. Tesla and its competitors should be confident that there is strong enthusiasm about self-driving technology as they consider their investments into those capabilities.

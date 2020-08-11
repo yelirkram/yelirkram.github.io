@@ -1,7 +1,9 @@
 # Mark E. Riley, PMP
 I have 20 years of management and technology consulting experience, primarily in the healthcare provider industry. My experience has included strategic planning, technology roadmap development, software evaluation and selection, software system implementation planning, software system implementation, IT governance, program and project management, data migration, data archiving, database design and development, custom software design development, and the software development life cycle (SDLC). I am certified Project Management Professional (PMP) from Project Management Institute (PMI).
 
-I am seeking a full-time job in the DC-metro area using my master's degree in data science and extensive healthcare technology management consulting career. I would prefer to work locally with up to 10% travel.
+I am seeking a full-time job in the DC-metro area leading healthcare data science teams using my master's degree in data science and extensive healthcare technology management consulting career. I would prefer to work locally with up to 10% travel.
+
+HireM@rkRiley.com
 
 ## Professional Links
 [<img src="/images/LI-In-Bug.png" width=118 height=100>](https://www.linkedin.com/in/rileymark/)
@@ -29,6 +31,8 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 * [Data Science & Strategic Decision Making](#data-science--strategic-decision-making)
 * [Capstone](#capstone)
 
+---
+
 ### Foundations of Data Science
 * Defined data science and explain its role in decision making.
 * Described database technologies and their strengths and weaknesses.
@@ -42,6 +46,12 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 My final project for this course was to apply the data science skills acquired in this class to the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics." I cleaned the datasets, performed analysis, and generated a recommended course of action as a consultant to the Fargo Health Group.  
 * [Report (pdf)](/projects/ds700/FinalProjectPart02_DS700_Riley.pdf)
 * [Narrated client presentation (YouTube)](https://youtu.be/vxM0XxPrKfs)
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Statistical Methods
 * Examined and summarize data numerically and graphically.
@@ -57,6 +67,12 @@ My final project for this course was to apply the data science skills acquired i
 **Final Project - Bank Loan Approval Optimization Report**  
 I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for the dual goals, and authoring a summary report with recommendations.
 * [Report (pdf)](/projects/ds705/Bank_Loan_Approval_Optimization_Report.pdf)
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Programming for Data Science
 * Used Python and R to analyze real-world data.
@@ -77,6 +93,12 @@ The final project was an opportunity to apply what I had learned to answer a que
 * [Parsed data for analysis in R. (csv)](/projects/ds710/tesla_autonomy_tweets.csv)
 * [R script containing the R code I used to analyze the data from Python (rmd)](/projects/ds710/Final_Project_R.Rmd)
 
+---
+
+[Back to top](#education)
+
+---
+
 ### Data Warehousing
 * Collected, cleaned, and prepared data.
 * Evaluated data in terms of source, volume, frequency, and flow.
@@ -84,6 +106,12 @@ The final project was an opportunity to apply what I had learned to answer a que
 * Chose and applied tools and methodologies to solve data science tasks.
 * Assessed the model used to solve data science tasks.
 * Interpreted data, extracted meaningful information, and assessed findings.
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Big Data High-Performance Computing
 * Implemented algorithms that allowed for the distributed processing of large data sets across computing clusters.
@@ -94,6 +122,12 @@ The final project was an opportunity to apply what I had learned to answer a que
 I used two datasets from the PGA Tour Golf Data by Brad Klassen on Kaggle to answer a number of queries using Hive on Hortonworks.
 * [Report (pdf)](/projects/ds730/Final_Problem_3.pdf)
 * [Queries in HiveQL (q)](/projects/ds730/prob3.q)
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Communicating About Data
 * Wrote, formatted, and presented technical prose.
@@ -115,6 +149,12 @@ Analysis to determine if I could accurately predict the Years of Potential Life 
 * [Report (pdf)](/projects/ds740/Mark_Riley_Final_Project_DS740.pdf)
 * [Code (rmd)](/projects/ds740/DS740_Final_Project_Mark_Riley.Rmd)
 
+---
+
+[Back to top](#education)
+
+---
+
 ### Visualization & Unstructured Data Analysis
 * Created effective visuals to maximize readability, comprehension, and understanding of complex datasets.
 * Analyzed and critiqued examples of visualizations.
@@ -135,6 +175,12 @@ I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch e
 * [Report (pdf)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.Rmd)
 
+---
+
+[Back to top](#education)
+
+---
+
 ### Ethics of Data Science
 * Identified and analyzed social, legal, and ethical issues in computer science and in the subfield of data science.
 * Interpreted and applied a professional code of ethics relevant to the data science profession.
@@ -144,12 +190,24 @@ I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch e
 I performed an ethical analysis of Project Nightingale, a joint venture between Ascension and Google that began in November of 2019. I outlined two clear options/perspectives, each of which was supported by different ethical frameworks or moral theories, which considered a relevant code of professional ethics and another systematic analysis.
 * [Report (pdf)](/projects/ds760/DS760_Long_Paper_Case_Analysis_Mark_Riley.pdf)
 
+---
+
+[Back to top](#education)
+
+---
+
 ### Prescriptive Analytics
 * Used data and predictive analytics to inform the decision-making process.
 * Selected and apply models appropriate for the nature of the data and the decision to be made.
 * Assessed model feedback and make adjustments to produce desired outcomes.
 * Methods studied included linear programming, sensitivity analysis, nonlinear programs, stochastic optimization, metaheuristics, simulated annealing, genetic algorithms, integer programming, constraint programming, simulation, decision analysis, collaborative filtering recommender systems, and content-based/hybrid recommender systems.
 * Tools used included Python, CoCalc, Silver Decisions, linear regression, random forest regression, XGBoost classifier, GridSearchCV, RandomSearchCV, BayesianOptimization, and TPOT.
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Data Science & Strategic Decision Making
 * Transformed findings from data resources into actionable business strategies.
@@ -164,6 +222,12 @@ I researched and wrote a “deep dive” paper on a topic related to the use of 
 **Project - Display of Information for Retail at Foot Locker, Inc.**  
 Created a presentation of data using dashboard to share with decision makers in the roles of CEO, store manager, and replenishment analyst (merchandiser) at Foot Locker. For sources I used the Foot Locker 2019 Annual report and a collection of trade and academic journals. 
 * [Report (pdf)](/projects/ds780/Assignment_3_DS780_Mark_Riley.pdf)
+
+---
+
+[Back to top](#education)
+
+---
 
 ### Capstone
 * Formulated a research question, problem or hypothesis that can be answered or tested using real-world data.

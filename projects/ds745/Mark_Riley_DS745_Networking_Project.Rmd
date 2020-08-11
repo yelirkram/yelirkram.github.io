@@ -1,0 +1,450 @@
+---
+title: "DS745 FA19 Networking Project"
+subtitle: "London Street Gang Network (2005-2009)"
+author: "Mark Riley"
+date: "11/10/2019"
+output: word_document
+---
+
+```{r include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(statnet)
+library(RColorBrewer)
+library(devtools)
+library(ggnet)
+
+# Go Eagles!
+laxMaroon = "#830019"
+laxGray = "#969799"
+
+### Setup the network dataset
+# Read in the adjacency matrix from the CSV, first column is row names, first row is column names
+temp_csv <- read.csv("LONDON_GANG.csv", row.names = 1, header = TRUE)
+
+# Convert the object to a matrix
+temp_matrix <- as.matrix(temp_csv)
+
+# Convert the matrix to a network, undirected, no loops, with edge attributes
+london <- as.network(x = temp_matrix, directed = FALSE, loops = FALSE, matrix.type = "adjacency", ignore.eval = FALSE, 
+                     names.eval = "Relationship")
+
+# Read in the attributes from the CSV, first column is row names, first row is column names
+temp_attr <- read.csv("LONDON_GANG_ATTR.csv", row.names = 1, header = TRUE)
+
+## Add the attributes to the verticies
+# Age
+set.vertex.attribute(london, "Age", temp_attr[,1])
+
+# Birthplace
+set.vertex.attribute(london, "Birthplace", temp_attr[,2])
+
+# Arrests
+set.vertex.attribute(london, "Arrests", temp_attr[,4])
+
+# Convictions
+set.vertex.attribute(london, "Convictions", temp_attr[,5])
+
+# Prison
+set.vertex.attribute(london, "Prison", temp_attr[,6])
+
+# Clean up temp objects
+rm(temp_csv, temp_matrix, temp_attr)
+
+### Five-Number Summary
+# Size
+nsize <- network.size(london)
+
+# Density
+nden <- gden(london)
+
+# Components
+ncomp <- components(london)
+
+# Diameter
+lgc <- component.largest(london, result="graph")
+gd <- geodist(lgc)
+ndia <- max(gd$gdist)
+
+# Clustering Coefficient
+nclust <- gtrans(london, mode = "graph")
+```
+
+# Introduction to the London Street Gang Network
+This network data set is a weighted network representing strengths of relationships among 54 confirmed members of a London street gang, 2005-2009. The network is undirected. Data is based on co-offenders in a London-based inner-city street gang, 2005-2009, operating from a social housing estate. Data comes from anonymised police arrest and conviction data for ‘all confirmed’ members of the gang. Nodes are gang members, and the edge weight gives the level of relationship:  
+
+1. Hang out together
+2. Co-offend together
+3. Co-offend together, serious crime
+4. Co-offend together, serious crime, kin  
+
+Below we can see the number of gang member connections by relationship in the table below.
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+table(london %e% "Relationship")
+```
+Most of the gang members hang out together rather than co-offend together.  
+
+Node attributes include age in years, birthplace (1. West Africa; 2. Caribbean; 3. UK; 4. East Africa), number of arrests, number of convictions, and if the gang member has served a prison sentence (0. No; 1. Yes).
+
+For this analysis we will use the full London Gang Network data set.  
+
+# Network Analysis  
+## Key Characteristics
+The London Gang network as a size of `r nsize` confirmed gang members. The network density is `r round(nden, 3)`. Density is the number of connections between gang members, divided by the maximum number of possible connections. Density values range between 0 and 1. The closer the density is to 1, the more interconnected the network.
+
+This network has `r ncomp` component. A component is a subgroup of the network in which all gang members are connected, directly or indirectly. The network diameter is `r ndia`. The diameter is the shortest distance between the two most distant gang members in the network. The clustering coefficient is `r round(nclust, 3)`. This measures the degree to which nodes in a graph tend to cluster together.  
+
+## Gang Member Prominence  
+The table below shows the prominence of each member of the gang. The gang members are represented by an alias consisting of 'X' plus a number. Degree is the number of connections a gang member has to other gang members. Closeness represents the extent that a gang member is close to all other gang members in the network. Betweenness is the extent that a gang member sits between pairs of other gang members in the network, such that a path between the other members has to go through that member.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Create a data frame with each node's degree, closeness, and betweenness
+df.prom <- data.frame(
+  Degree = round(degree(london), 0),
+  Closeness = round(closeness(london), 3),
+  Betweenness = round(betweenness(london), 3))
+
+# Add the node names as row names
+row.names(df.prom) <- london %v% "vertex.names"
+
+# Sort the data frame by degree, descending
+df.promsort <- df.prom[order(-df.prom$Degree),]
+
+# Calculate the centralization of the degree, closeness, and betweenness
+cd <- centralization(london, degree)
+cc <- centralization(london, closeness)
+cb <- centralization(london, betweenness)
+
+# Add the centralization values to the data frame
+df.promsort <- rbind(df.promsort,c(cd,cc,cb))
+
+# Add a row name for centralization
+row.names(df.promsort)[55]<- "Centralization"
+
+# Print the data frame
+df.promsort
+```
+
+From the table above, we can see that a high number of connections for a gang member correlates to high levels of closeness and betweenness. Gang members X1, X7, and X12 are the three most prominent members of the London Street Gang.  
+
+## Visualizations  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", fig.cap="Degree Frequency of London Street Gang Network"}
+# Transform the degrees into a table
+degree_table <- table(sna::degree(london))
+
+# Plot the frequency of the degrees
+plot(degree_table/sum(degree_table), col = laxMaroon, main = "", xlab = "Degree",
+     ylab = "Frequency")
+```
+
+The figure above plots the frequency of the degrees in the London Street Gang Network data. Members with four and ten degrees are the most frequent. No gang member has fewer than four degrees and no more than 50.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", fig.cap="London Street Gang Network Diagram"}
+# Extract the Relationship and Birthplace attributes
+rel_level <- london %e% "Relationship"
+
+library(dplyr) # For case_when functionality
+
+# Store the name of the birthplace rather than the code for clarity in visualization
+birthplace <- case_when(
+   london %v% "Birthplace" == 1 ~ "West Africa",
+   london %v% "Birthplace" == 2 ~ "Caribbean",
+   london %v% "Birthplace" == 3 ~ "United Kingdom",
+   london %v% "Birthplace" == 4 ~ "East Africa",
+   TRUE ~ ""
+)
+
+# Plot the network
+ggnet2(london, mode = "fruchtermanreingold", label = TRUE, label.color = "white", color = birthplace,
+      palette = "Dark2", alpha = .8, label.size = 4, edge.size = rel_level/3, legend.position = "bottom")
+
+# Detach dplyr since it masks functions from stats
+detach(package:dplyr)
+
+```
+
+The London Street Gang network is picture above. The gang members are labeled with their aliases (e.g. X1). The color of each member corresponds with his place of birth. The thickness of the connection between the nodes indicates the type of relationship between the gang members, with the thinnest connections corresponding to hanging out and the thickest corresponding to co-offenders, serious crime, kin. 
+
+The graph depicts the members with the highest prominence in the center of the network (e.g. X1, X7, X12). The members with the lowest prominence (e.g. X45, X50, X53) at the periphery of the network. The majority of the connections are thin, corresponding to a hanging out relationship rather than co-offending.  
+
+## Community Detection  
+Community detection in networks is the identification of subgroups among the gang members. The subgroups are characterized by a large number of internal connections between the subgroup members, and also relatively few ties from the subgroup to other parts of the gang.
+
+We used a number of community detection algorithms to identify subgroups in the London Street Gang. The characteristics of the network data set informed our decision on which algorithms to select. The London Street Gang network is undirected, weighted, and has a single component. These characteristics fit the Walktrap, Edge-Betweenness, Spinglass, Fast-Greedy, and Louvain algorithms.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+detach(package:statnet)
+library(intergraph)
+library(igraph)
+
+# Convert the network to an iGraph
+ilondon <- asIgraph(london)
+
+london_mod <- rbind(
+  modularity(ilondon,(V(ilondon)$Birthplace)),
+  modularity(ilondon,(V(ilondon)$Age)),
+  modularity(ilondon,(V(ilondon)$Arrests+1)),
+  modularity(ilondon,(V(ilondon)$Convictions+1)),
+  modularity(ilondon,(V(ilondon)$Prison+1)),
+  modularity(ilondon,(E(ilondon)$Relationship))
+)
+
+rownames(london_mod) <- c("Birthplace", "Age", "Arrests", "Convictions", "Prison", "Relationship")
+colnames(london_mod) <- "Modularity"
+as.data.frame(london_mod)
+```
+
+The table above shows the modularity scores for each of the node and edge attributes of the network. A positive modularity value suggests that the attribute explains some of the clustering present in the network. We see that Birthplace and Prison are the only two attributes with positive modularity.  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# Walktrap
+cw <- cluster_walktrap(ilondon)
+#membership(cw)
+cw_mod <- modularity(cw)
+#plot(cw, ilondon, main = "Walktrap")
+
+# Edge Betweenness
+ceb <- cluster_edge_betweenness(ilondon)
+#membership(ceb)
+ceb_mod <- modularity(ceb)
+#plot(ceb, ilondon, main = "Edge-Betwenness")
+
+# Spinglass
+cs <- cluster_spinglass(ilondon)
+#membership(cs)
+cs_mod <- modularity(cs)
+
+# Fast Greedy
+cfg <- cluster_fast_greedy(ilondon)
+#membership(cfg)
+cfg_mod <- modularity(cfg)
+
+# Louvain
+cl <- cluster_louvain(ilondon)
+#membership(cl)
+cl_mod <- modularity(cl)
+
+df.mod <- data.frame(c(cw_mod, ceb_mod, cs_mod, cfg_mod, cl_mod))
+rownames(df.mod) <- c("Walktrap", "Edge-Betweenness", "Spinglass", "Fast-Greedy", "Louvain")
+colnames(df.mod) <- "Modularity"
+df.mod
+```
+
+The table above displays the results of the community detection algorithms in the form of a modularity score. The top three performing algorithms were Spinglass (six subgroups), Fast-Greedy (four subgroups), and Louvain (five subgroups). We will plot each of the top three results below. The values in each circle will represent either the Birthplace or Prison values for that gang member, since those were the two attributes with positive modularities.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Spinglass Community Detection", fig.align="center"}
+par(mfrow = c(1, 2), mar = c(0,0,.8,0))
+plot(cs, ilondon, vertex.label=V(ilondon)$Birthplace, main="Birthplace")
+plot(cs, ilondon, vertex.label=V(ilondon)$Prison, main="Prison")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center", fig.cap="Fast-Greedy Community Detection"}
+par(mfrow = c(1, 2), mar = c(0,0,.8,0))
+plot(cfg, ilondon, vertex.label=V(ilondon)$Birthplace, main="Birthplace")
+plot(cfg, ilondon, vertex.label=V(ilondon)$Prison, main="Prison")
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center", fig.cap="Louvain Community Detection"}
+par(mfrow = c(1, 2), mar = c(0,0,.8,0))
+plot(cl, ilondon, vertex.label=V(ilondon)$Birthplace, main="Birthplace")
+plot(cl, ilondon, vertex.label=V(ilondon)$Prison, main="Prison")
+```
+
+The Spinglass algorithm performed slightly better than Fast-Greedy and Louvain. That said, we like that the Louvain (five subgroups) has three subgroups where members come from only two Birthplace locations. The fourth subgroup has members from three Birthplace locations and the remaining subgroup has members from all of the Birthplace locations.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+table(V(ilondon)$Birthplace, membership(cl))
+```
+
+When looking at the Prison values across the Louvain subgroups, each subgroup has roughly even numbers of members who have, and have not, been to Prison. This corresponds well with the edge attributes showing roughly half of the relationships between members represent hanging out vs. co-offending.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+table(V(ilondon)$Prison, membership(cl))
+```
+
+## Network Modeling  
+We will now perform some network modeling using exponential random graph models (ERGMs). ERGMs are a flexible and powerful approach to build and test statistical models of networks.  
+
+### NULL Model  
+We will begin with the NULL model, which is the simplest model using only the network edges.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+detach(package:igraph)
+library(ergm)
+library(statnet)
+
+# Null model
+DSmod0 <- ergm(london ~ edges, control = control.ergm(seed = 255))
+summary(DSmod0)
+```
+
+The NULL Model coefficient of edges is negative (`r round(DSmod0$coef[1], 3)`). This shows that the density of the network is less than 50%, which lines up with the calculated density (`r round(nden, 3)`) from the network description.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Simulate triangles from the Null Model
+simtrinull <- simulate(DSmod0, nsim = 100, monitor = ~triangles, statsonly=TRUE, 
+                       control = control.simulate(MCMC.burnin = 1000, MCMC.interval = 1000), seed=255)
+
+# Get the number of triangles in the actual model
+london.tri <- summary(london ~ triangle)
+
+# Set the visualization variable
+par(mar = c( 4,4,1,1 ), cex.main = .9, cex.lab = .9, cex.axis = .75)
+
+# Graph the historgram of number of trangles vs number of simulations
+hist(simtrinull[,2], xlim = c(0,1000), col = laxMaroon, main = "Null Model Triangles", xlab = "Number of Triangles",
+     ylab = "Number of Simulations")
+
+# Add a point to represent the actual model
+points(london.tri, 3, pch = "X", cex = 2)
+```
+
+The histogram above shows that 100 simulated networks based on the NULL Model are not able to capture how triangles are formed in the network. There are 860 triangles in the London Street Gang network, but the simulations based on the NULL Model we developed show very few triangles (mean of `r mean(simtrinull[,2])`).  
+
+### Adding Node Attributes  
+Based on the community detection performed above, we know that two node attributes have positive modularities - meaning they account for some of of the clustering present in the network. Those attributes were Birthplace and Prison, in decreasing order. It might be reasonable to assume that gang members are more likely to be connected based on those attributes over the NULL model.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+DSsim0 <- simulate(DSmod0, verbose = TRUE, seed = 255)
+
+# Create a model using edges plus adding in Birthplace and Prison
+DSmod1 <- ergm(london ~ edges + nodefactor('Birthplace') + nodefactor('Prison'), control = control.ergm(seed=255))
+DSsim1 <- simulate(DSmod1, verbose = TRUE, seed = 255)
+
+# Print a summary of the model with node attributes
+summary(DSmod1)
+```
+
+The results show that the Birthplace factors, except for 4-West Africa, and factor of Prison are significantly associated with the likelihood of observing a connection between two gang members.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Combine the results into a matrix
+rowgof <- rbind(
+  summary(london ~ edges + triangle),
+  summary(DSsim0 ~ edges + triangle),
+  summary(DSsim1 ~ edges + triangle))
+
+# Add row names and convert to a data frame for nicer printing
+rownames(rowgof) <- c("London Gangs", "NULL Model", "Birthplace and Prison")
+rowgof.df <- as.data.frame(rowgof)
+rowgof.df
+```
+
+Simulation analysis based on 100 simulations each for NULL model and adding node attributes of Birthplace and Prison does improve upon the NULL model. The number of edges and triangles are slightly closer to the actual network. However the best simulated model is still very far from capturing the true number of triangles.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Capture all the AIC values for the NULL and other models into a matrix
+aic_summary <- rbind(DSmod0$glm$aic, DSmod1$glm$aic)
+
+# Add in row names
+rownames(aic_summary) <- c("NULL Model", "Birthplace and Prison")
+
+# Add a column name
+colnames(aic_summary) <- "AIC"
+
+# Convert to a data frame for nicer knitting
+aic_summary.df <- as.data.frame(aic_summary)
+
+# Print the AIC summary
+aic_summary.df
+```
+
+Analysis of the AIC values shows that the model using the node attributes has better performance than the NULL model.
+
+### Adding Homophily Effect  
+We will now test if connections between gang members are more or less likely based on shared Birthplace.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Create a homphilly model using nodematch on Birthplace and perform simulation
+DSmod5a <- ergm(london ~ edges + nodematch('Birthplace') + nodefactor('Prison'), control = control.ergm(seed = 255))
+DSsim5a <- simulate(DSmod5a, verbose = TRUE, seed = 255)
+summary(DSmod5a)
+```
+
+The model above uses the Birthplace attribute of each gang member to assess the affect on the likelihood of a connection when both gang members were born in the same location. The model shows that the Birthplace match parameter is positive and statistically significant. This indicates there is a homophily effect here.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Create a homphilly model using nodematch on Birthplace with diff = TRUE and perform simulation
+DSmod5b <- ergm(london ~ edges + nodematch('Birthplace', diff = TRUE) + nodefactor('Prison'),
+                control = control.ergm(seed = 255))
+DSsim5b <- simulate(DSmod5b, verbose = TRUE, seed = 255)
+summary(DSmod5b)
+```
+
+The model above uses matches on each value for Birthplace. The results show that the homophily effect is seen at all birthplaces except the United Kingdom.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Add the homophily results to the existing matrix
+rowgof <- rbind(
+  rowgof,
+  summary(DSsim5a ~ edges + triangle),
+  summary(DSsim5b ~ edges + triangle))
+
+# Add row names for the homophily results
+rownames(rowgof)[4:5] <- c("Homophily Birthplace Match", "Homophily Birthplace Match w/Diff")
+
+# Convert the matrix to a data frame for better printing
+rowgof.df <- as.data.frame(rowgof)
+rowgof.df
+```
+
+Simulation statistics shows that our homophily models produced mixed results. Homophily with Birthplace match was the closest model on edges and triangles. Again the number of triangles is still significantly lower than the observed network.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+# Add in the AIC values for the homophily models to the existing matrix
+aic_summary <- rbind(
+  aic_summary,
+  DSmod5a$glm$aic,
+  DSmod5b$glm$aic
+)
+
+# Add additional row names for the new rows
+rownames(aic_summary)[3:4] <- c("Homophily Birthplace Match", "Homophily Birthplace Match w/Diff")
+
+# Convert the matrix to a data frame for better printing
+aic_summary.df <- as.data.frame(aic_summary)
+aic_summary.df
+```
+
+Analysis of the AIC values show that the Homophily Birthplace Match with Diff model has the best performance (lowest value) out of all the models.  
+
+### Goodness of Fit  
+Using the model with the overall lowest AIC value, Homophily Birthplace Match with Diff, we will compare selected network properties of the simulated networks to those same network characteristics of the observed London Street Gang network. Specifically, we will examine the geodesic distances, the distribution of edgewise shared partners, the degree distribution, and the frequency of different patterns of triangles.  
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+DSmod5b_gof <- gof(DSmod5b, GOF = ~degree + espartners + dspartners + triadcensus, verbose = TRUE,
+                   burnin = 10000, interval = 10000)
+
+# Graphic goodness-of-fit for the Birthplace match with Diff network 
+op<-par(mfrow=c(2,2))
+plot(DSmod5b_gof, cex.axis = 1.6, cex.label = 1.6)
+par(op)
+```
+
+Examination of the diagnostic plots shows that, aside from the triad census and node attribute Prison = 1, the model struggles to fit the observed network.  
+
+# Bibliography  
+Grund, T. and Densley, J. (2015) Ethnic Homophily and Triad Closure: Mapping Internal Gang Structure Using Exponential Random Graph Models. Journal of Contemporary Criminal Justice, Vol. 31, Issue 3, pp. 354-370
+
+Grund, T. and Densley, J. (2012) Ethnic Heterogeneity in the Activity and Structure of a Black Street Gang. European Journal of Criminology, Vol. 9, Issue 3, pp. 388-406.
+SOURCE: Available from Manchester.
+
+https://sites.google.com/site/ucinetsoftware/datasets/covert-networks/londongang
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+detach(package:statnet)
+library(igraph)
+
+# Convert the igraph to data frames of the nodes and edges
+node.df <- as_data_frame(ilondon, what = "vertices")
+edge.df <- as_data_frame(ilondon, what = "edges")
+
+# Remove the 'na' column from the data frames before writing to csv
+node.df$na <- NULL
+edge.df$na <- NULL
+
+# Save the nodes and edges as csv files
+write.csv(node.df, "London Gangs Nodes.csv")
+write.csv(edge.df, "London Gang Edges.csv")
+```

@@ -19,6 +19,9 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 * [DS 700: Foundations of Data Science](#ds-700-foundations-of-data-science)
 * [DS 705: Statistical Methods](#ds-705-statistical-methods)
 * [DS 710: Programming for Data Science](#ds-710-programming-for-data-science)
+* [DS 730: Big Data High-Performance Computing](#ds-730-big-data-high-performance-computing)
+* [DS 735: Communicating About Data](#ds-735-communicating-about-data)
+* [DS 740: Data Mining & Machine Learning](#ds-740-data-mining-&-machine-learning)
 
 ### DS 700 Foundations of Data Science
 * Defined data science and explain its role in decision making.
@@ -31,8 +34,8 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 
 **Final Project - Fargo Health Group Forecasting**
 My final project for this course was to apply the data science skills acquired in this class using the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics," to perform clean up the datasets, perform analysis, and generate a recommended course of action as a consultant to the Fargo Health Group.  
-* [Report (PDF)](/projects/FinalProjectPart02_DS700_Riley.pdf)
-* [Narrated client presentation](https://youtu.be/vxM0XxPrKfs)
+* [Report (pdf)](/projects/FinalProjectPart02_DS700_Riley.pdf)
+* [Narrated client presentation (YouTube)](https://youtu.be/vxM0XxPrKfs)
 
 ### DS 705 Statistical Methods
 * Examined and summarize data numerically and graphically.
@@ -47,7 +50,7 @@ My final project for this course was to apply the data science skills acquired i
 
 **Final Project - Bank Loan Approval Optimization Report**
 I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for dual goals, and summary report with recommendations.
-[Report (PDF)](/projects/Bank_Loan_Approval_Optimization_Report.pdf)
+* [Report (pdf)](/projects/Bank_Loan_Approval_Optimization_Report.pdf)
 
 ### DS 710 Programming for Data Science
 * Used Python and R to analyze real-world data.
@@ -62,8 +65,46 @@ I developed a report for a bank with recommendations on using logistic regressio
 
 **Final Project - Analysis of Tesla Autonomy Day Tweets Sentiment**
 The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyize the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
-* [A 1 to 2-page executive summary reporting my question, analysis, and results non-technically. (PDF)](/projects/Final_Project_R.pdf)
-* [A Python notebook with my code used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/Mark%20%Riley%20%Final%20%Project.ipynb)
-* [A file containing the data from 100 tweets, along with any variables I computed about the tweets. (CSV)](/project/tesla_autonomy_100_tweets.csv)
-* [A file containing my parsed data for analysis in R. (CSV)](/projects/tesla_autonomy_tweets.csv)
-* [An R script containing the R code I used to analyze the data from Python (.rmd)](/projects/Final%20%Project_R.Rmd)
+* [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/Final_Project_R.pdf)
+* [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/Mark%20%Riley%20%Final%20%Project.ipynb)
+* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/tesla_autonomy_100_tweets.csv)
+* [Parsed data for analysis in R. (CSV)](/projects/tesla_autonomy_tweets.csv)
+* [R script containing the R code I used to analyze the data from Python (rmd)](/projects/Final%20%Project_R.Rmd)
+
+### DS 715 Data Warehousing
+* Collected, cleaned, and prepared data.
+* Evaluate ddata in terms of source, volume, frequency, and flow.
+* Identified and classified relevant variables for data science tasks.
+* Chose and applied tools and methodologies to solve data science tasks.
+* Assessed the model used to solve data science tasks.
+* Interpreted data, extracted meaningful information, and assessed findings.
+
+### DS 730 Big Data High-Performance Computing
+* Implemented algorithms that allowed for the distributed processing of large data sets across computing clusters.
+* Created parallel algorithms that can process large data sets.
+* Used tools and software such as Hadoop, Pig, Hive, and Python to compare large data-processing tasks using cloud-computing services.
+
+**Final Project - PGA Tour Stats with Hive**
+I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](https://www.kaggle.com/bradklassen/pga-tour-20102018-data) to answer a number of queries using Hive on Hortonworks.
+* [Report (pdf)](/projects/Final%20%Problem%20%3.pdf)
+* [Queries in HiveQL (q)](/projects/prob3.q)
+
+### DS 735 Communicating About Data
+* Wrote, formatted, and presented technical prose.
+* Helped non-technical professionals visualize, explore, and act on data science findings.
+* Facilitated data-informed discussions through listening, questioning, and presenting.
+
+**Final Project - Executive Summary and Visual Resumes**
+* [Executive summary of the Cerner 2018 Annual Report with Tableau visualizations (pdf)](/projects/Activity_3_Mark_Riley_DS735_Fall%20%2019.pdf)
+* [Two visual resumes for two data science job descriptions (pdf)](/projects/Assignment%20%3.pdf)
+
+### DS 740 Data Mining & Machine Learning
+* Implemented association rules & clustering algorithms.
+* Linear and logistic regression, regression and classification trees, neural networks, nearest neighbor.
+* Used ensemble methods such as bagging and boosting.
+* Assessed and deployed predictive models.
+
+**Final Project - Predicting Years of Potential Life Lost (YPLL)**
+Analysis to determine if I could accurately predict the Years of Potential Life Lost (YPLL) rate per 100,000 people in United States (US) Counties and the District of Columbia (DC) using the dataset [US County Premature Mortality Rate by RoyXss on Kaggle](https://www.kaggle.com/royxss/us-county-premature-mortality-rate). I used robust regression, bagging, boosting, randmon forest, and artificial neural networks in R.
+[Report (pdf)](/projects/Mark%20%Riley%20%Final%20%Project%20%DS740%20%20190808.pdf)
+[Code (rmd)](/projects/DS740_SU19_Final_Project_Mark_Riley.Rmd)

@@ -55,7 +55,7 @@ My final project for this course was to apply the data science skills acquired i
 
 **Final Project - Bank Loan Approval Optimization Report**  
 I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for dual goals, and summary report with recommendations.
-* [Report (pdf)](/projects/ds705/710Bank_Loan_Approval_Optimization_Report.pdf)
+* [Report (pdf)](/projects/ds705/Bank_Loan_Approval_Optimization_Report.pdf)
 
 ### Programming for Data Science
 * Used Python and R to analyze real-world data.
@@ -73,7 +73,7 @@ The final project was an opportunity to apply what I had learned to answer a que
 * [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/ds710/Final_Project_R.pdf)
 * [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
 * [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/ds710/tesla_autonomy_100_tweets.csv)
-* [Parsed data for analysis in R. (CSV)](/projects/tesla_autonomy_tweets.csv)
+* [Parsed data for analysis in R. (CSV)](/projects/ds710/tesla_autonomy_tweets.csv)
 * [R script containing the R code I used to analyze the data from Python (rmd)](/projects/ds710/Final_Project_R.Rmd)
 
 ### DS 715 Data Warehousing
@@ -131,7 +131,7 @@ I performed analysis of an undirected, weighted network representing relationshi
 
 **Text Mining/Natural Language Processing Project**  
 I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch event using R and the rtweet package.
-* [Report (pdf)](/projects/ds754/Mark_Riley_DS745_Text_Mining_Project.pdf)
+* [Report (pdf)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.Rmd)
 
 ### Ethics of Data Science
@@ -172,5 +172,4 @@ Created a presentation of data using dashboard to share with decision makers in 
 * Prepared a professional report of their my and effectively communicated my findings to a non-technical audience.
 
 My capstone paper's title was, "Applying Predictive Analytic Capabilities for CardioMEMS Patients." This analysis aimed to determine if I could predict four adverse heart failure-related events by employing supervised classification algorithms with interpretable results using a combination of data from the CardioMEMS devices and patients’ electronic health records. The adverse health events in scope for this analysis were all-cause hospitalizations, heart failure-related hospitalizations, use of intravenous diuretic therapy outside of a hospitalization, and changes to pulmonary artery diastolic (PAD) pressure thresholds.
-
-[Report and code repository on GitHub](https://github.com/yelirkram/Applying-Predictive-Analytic-Capabilities-for-CardioMEMS-Patients)
+* [Report and code repository on GitHub](https://github.com/yelirkram/Applying-Predictive-Analytic-Capabilities-for-CardioMEMS-Patients)

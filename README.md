@@ -64,12 +64,12 @@ I developed a report for a bank with recommendations on using logistic regressio
 * Performed exploratory data analysis in R.
 * Tested statistical hypotheses using R functions.
 * Used an application programming interface (API) to collect real-world data from social media.
-* Cleaned and formated data for analysis.
+* Cleaned and formatted data for analysis.
 * Chose and implemented efficient methods for analyzing data sets.
 * Followed best practices for documentation and readable code.
 
 **Final Project - Analysis of Tesla Autonomy Day Tweets Sentiment**  
-The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyize the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
+The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyze the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
 * [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/Final_Project_R.pdf)
 * [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/Mark%20%Riley%20%Final%20%Project.ipynb)
 * [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/tesla_autonomy_100_tweets.csv)
@@ -78,7 +78,7 @@ The final project was an opportunity to apply what I had learned to answer a que
 
 ### DS 715 Data Warehousing
 * Collected, cleaned, and prepared data.
-* Evaluate ddata in terms of source, volume, frequency, and flow.
+* Evaluated data in terms of source, volume, frequency, and flow.
 * Identified and classified relevant variables for data science tasks.
 * Chose and applied tools and methodologies to solve data science tasks.
 * Assessed the model used to solve data science tasks.
@@ -110,12 +110,12 @@ I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](http
 * Assessed and deployed predictive models.
 
 **Final Project - Predicting Years of Potential Life Lost (YPLL)**  
-Analysis to determine if I could accurately predict the Years of Potential Life Lost (YPLL) rate per 100,000 people in United States (US) Counties and the District of Columbia (DC) using the dataset [US County Premature Mortality Rate by RoyXss on Kaggle](https://www.kaggle.com/royxss/us-county-premature-mortality-rate). I used robust regression, bagging, boosting, randmon forest, and artificial neural networks in R.
+Analysis to determine if I could accurately predict the Years of Potential Life Lost (YPLL) rate per 100,000 people in United States (US) Counties and the District of Columbia (DC) using the dataset [US County Premature Mortality Rate by RoyXss on Kaggle](https://www.kaggle.com/royxss/us-county-premature-mortality-rate). I used robust regression, bagging, boosting, random forest, and artificial neural networks in R.
 * [Report (pdf)](/projects/Mark%20%Riley%20%Final%20%Project%20%DS740%20%20190808.pdf)
 * [Code (rmd)](/projects/DS740_SU19_Final_Project_Mark_Riley.Rmd)
 
 ### Visualization & Unstructured Data Analysis
-* Createed effective visuals to maximize readability, comprehension, and understanding of complex datasets.
+* Created effective visuals to maximize readability, comprehension, and understanding of complex datasets.
 * Analyzed and critiqued examples of visualizations.
 * Analyzed unstructured data using text mining and web text mining techniques.
 * Performed social network analysis.
@@ -125,12 +125,12 @@ Created visualizations in Tableau to determine if there was a relationship betwe
 * [Report (pdf)](/projects/ds745/Mark_Riley_Visualization_Project_DS745.pdf)
 
 **Network Analysis Project**  
-I performed analysis of an undirected, weighted network representing relationships among 54 confirmed members of a London street gang, 2005-2009. The network is undirected. Using R I analyized gang member prominence from their degree, closeness, and betweenness metrics, created a network diagram, peformed community detection, and created exponential random graph models (ERGM). The data source was [London Gang on UCINET Software](https://sites.google.com/site/ucinetsoftware/datasets/covert-networks/londongang).
+I performed analysis of an undirected, weighted network representing relationships among 54 confirmed members of a London street gang, 2005-2009. The network is undirected. Using R I analyzed gang member prominence from their degree, closeness, and betweenness metrics, created a network diagram, performed community detection, and created exponential random graph models (ERGM). The data source was [London Gang on UCINET Software](https://sites.google.com/site/ucinetsoftware/datasets/covert-networks/londongang).
 * [Report (pdf)](/projects/ds745/Mark_Riley_DS745_Networking_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Networking_Project.Rmd)
 
 **Text Mining/Natural Language Processing Project**  
-I perfomed sentiment analysis of tweets regarding the Tesla Cybertruck launch event using R and the rtweet package.
+I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch event using R and the rtweet package.
 * [Report (pdf)](/projects/ds754/Mark_Riley_DS745_Text_Mining_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.Rmd)
 
@@ -140,7 +140,7 @@ I perfomed sentiment analysis of tweets regarding the Tesla Cybertruck launch ev
 * Interpreted the activities and choices of others within an ethical framework and determined an appropriate action based on standards of professional conduct within computer science.
 
 **Final Project - Ethical Analysis of Project Nightingale**
-I perfomed an ethical analysis of Project Nighingale, a joint venture between Ascension and Google that began in November of 2019. I outlined two clear options/perspectives, each of which was supported by different ethical frameworks or moral theories, which considered a relevant code of professional ethics and another systematic analysis.
+I performed an ethical analysis of Project Nightingale, a joint venture between Ascension and Google that began in November of 2019. I outlined two clear options/perspectives, each of which was supported by different ethical frameworks or moral theories, which considered a relevant code of professional ethics and another systematic analysis.
 * [Report (pdf)](/projects/ds760/DS760_Long_Paper_Case_Analysis_Mark_Riley.pdf)
 
 ### Prescriptive Analytics
@@ -148,13 +148,13 @@ I perfomed an ethical analysis of Project Nighingale, a joint venture between As
 * Selected and apply models appropriate for the nature of the data and the decision to be made.
 * Assessed model feedback and make adjustments to produce desired outcomes.
 * Methods studied included linear programming, sensitivity analysis, nonlinear programs, stochastic optimization, metaheuristics, simulated annealing, genetic algorithms, integer programming, constraint programming, simulation, decision analysis, collaborative filtering recommender systems, and content-based/hybrid recommender systems.
-* Tools used included Python, CoCalc, Silver Decisions, linear regression, random forrest regression, XGBoost classifier, GridSearchCV, RandomSearchCV, BayesianOptimization, and TPOT.
+* Tools used included Python, CoCalc, Silver Decisions, linear regression, random forest regression, XGBoost classifier, GridSearchCV, RandomSearchCV, BayesianOptimization, and TPOT.
 
 ### Data Science & Strategic Decision Making
 * Transformed findings from data resources into actionable business strategies.
 * Integrated data science capabilities into the formation of a situation analysis.
 * Explained how data assets can be used to develop competitive advantage.
-* Identified and appraisde the leadership and management skills required to direct a team of data science professionals toward meeting organizational goals.
+* Identified and appraised the leadership and management skills required to direct a team of data science professionals toward meeting organizational goals.
 
 **Project - Use of Data to Design and Operate Hotel Loyalty and Marketing Programs**  
 I researched and wrote a “deep dive” paper on a topic related to the use of data for marketing using trade and academic journals.
@@ -171,6 +171,6 @@ Created a presentation of data using dashboard to share with decision makers in 
 * Interpreted and assessed my results and evaluated the limitations of my findings.
 * Prepared a professional report of their my and effectively communicated my findings to a non-technical audience.
 
-My capstone paper title was, "Applying Predictive Analytic Capabilities for CardioMEMS Patients." This analysis aimed to determine if I could predict four adverse heart failure-related events by employing supervised classification algorithms with interpretable results using a combination of data from the CardioMEMS devices and patients’ electronic health records. The adverse health events in scope for this analysis were all-cause hospitalizations, heart failure-related hospitalizations, use of intravenous diuretic therapy outside of a hospitalization, and changes to pulmonary artery diastolic (PAD) pressure thresholds.
+My capstone paper's title was, "Applying Predictive Analytic Capabilities for CardioMEMS Patients." This analysis aimed to determine if I could predict four adverse heart failure-related events by employing supervised classification algorithms with interpretable results using a combination of data from the CardioMEMS devices and patients’ electronic health records. The adverse health events in scope for this analysis were all-cause hospitalizations, heart failure-related hospitalizations, use of intravenous diuretic therapy outside of a hospitalization, and changes to pulmonary artery diastolic (PAD) pressure thresholds.
 
 [Report and code repository on GitHub](https://github.com/yelirkram/Applying-Predictive-Analytic-Capabilities-for-CardioMEMS-Patients)

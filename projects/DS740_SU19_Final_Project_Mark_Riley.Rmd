@@ -1,0 +1,603 @@
+---
+title: "DS740 Summer 2019 Final Project"
+author: "Mark Riley"
+date: "8/8/2019"
+output: pdf_document
+---
+
+```{r Setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr) # Data manipulation
+library(MASS) # Robust regression
+library(ggformula) # Graphing
+library(tree) # Decision trees
+library(gbm) # Boosting
+library(randomForest) # Random Forests
+library(nnet) # Artificial Neural Networks
+library(VIM) # For graphing missing values
+
+laxMaroon = "#830019"; laxGray = "#969799" # Go Eagles!
+
+# Load the data sets
+ypll <- read.csv("ypll.csv")
+addtl <- read.csv("additional_measures_cleaned.csv")
+
+# Drop the State and County columns from addtl to avoid duplicating
+# with the join below
+addtl$State <- NULL; addtl$County <- NULL
+
+# Rename some columns to more meaningful names
+addtl <- addtl %>% 
+  rename("PctUnder18" = "X..18", 
+         "PctOver65" = "X65.and.over",
+         "PctHighHousingCosts" = "X..high.housing.costs",
+         "PctFreeLunch" = "X..Free.lunch",
+         "PctChildIlliteracy" = "X..child.Illiteracy",
+         "PctDriveAlone" = "X..Drive.Alone",
+         "PctDiabetes" = "X.Diabetes")
+
+# Join the data together using the FIPS field
+ypll <- ypll %>% inner_join(addtl, by = "FIPS")
+
+# Get rid of the addtl data frame
+rm(addtl)
+
+# Save the observations where YPLL is NA or marked as unreliable
+ypll.unrel <- ypll %>% filter(Unreliable == "x" | is.na(YPLL.Rate))
+
+# Filter out the state level data and where YPLL is NA or marked as unreliable
+ypll <- ypll %>% filter(!County == "") %>% filter(!is.na(YPLL.Rate)) %>% filter(!Unreliable == "x")
+
+# Change the States to their abbreviations
+ypll <- ypll %>% mutate(stateCode = case_when(
+    State == "Alabama" ~ "AL",
+    State == "Alaska" ~ "AK",
+    State == "Arizona" ~ "AZ",
+    State == "Arkansas" ~ "AR",
+    State == "California" ~ "CA",
+    State == "Colorado" ~ "CO",
+    State == "Connecticut" ~ "CT",
+    State == "Delaware" ~ "DE",
+    State == "District of Columbia" ~ "DC",
+    State == "Florida" ~ "FL",
+    State == "Georgia" ~ "GA",
+    State == "Hawaii" ~ "HI",
+    State == "Idaho" ~ "ID",
+    State == "Illinois" ~ "IL",
+    State == "Indiana" ~ "IN",
+    State == "Iowa" ~ "IA",
+    State == "Kansas" ~ "KS",
+    State == "Kentucky" ~ "KY",
+    State == "Louisiana" ~ "LA",
+    State == "Maine" ~ "ME",
+    State == "Maryland" ~ "MD",
+    State == "Massachusetts" ~ "MA",
+    State == "Michigan" ~ "MI",
+    State == "Minnesota" ~ "MN",
+    State == "Mississippi" ~ "MS",
+    State == "Missouri" ~ "MO",
+    State == "Montana" ~ "MT",
+    State == "Nebraska" ~ "NE",
+    State == "Nevada" ~ "NV",
+    State == "New Hampshire" ~ "NH",
+    State == "New Jersey" ~ "NJ",
+    State == "New Mexico" ~ "NM",
+    State == "New York" ~ "NY",
+    State == "North Carolina" ~ "NC",
+    State == "North Dakota" ~ "ND",
+    State == "Ohio" ~ "OH",
+    State == "Oklahoma" ~ "OK",
+    State == "Oregon" ~ "OR",
+    State == "Pennsylvania" ~ "PA",
+    State == "Rhode Island" ~ "RI",
+    State == "South Carolina" ~ "SC",
+    State == "South Dakota" ~ "SD",
+    State == "Tennessee" ~ "TN",
+    State == "Texas" ~ "TX",
+    State == "Utah" ~ "UT",
+    State == "Vermont" ~ "VT",
+    State == "Virginia" ~ "VA",
+    State == "Washington" ~ "WA",
+    State == "West Virginia" ~ "WV",
+    State == "Wisconsin" ~ "WI",
+    State == "Wyoming" ~ "WY",
+    TRUE ~ NA_character_
+  ))
+
+# Change the row names to help identify outliers in graphs using the
+# state abbreviation and the county
+row.names(ypll) <- paste(ypll$stateCode, ypll$County, sep="-")
+
+# Remove the columns that are now the row names and unused columns
+ypll$State <- NULL
+ypll$stateCode <- NULL
+ypll$County <- NULL
+ypll$FIPS <- NULL
+ypll$Unreliable <- NULL
+
+# Set the random seed
+set.seed(255)
+
+# Impute missing predictor values
+ypll.impute <- rfImpute(YPLL.Rate ~ ., ypll)
+```
+
+
+```{r Data Exploration, include=FALSE}
+# Check for missing values from the unimputed data set
+q <- aggr(ypll, col=c(laxGray, laxMaroon), numbers=TRUE, sortVars=TRUE, 
+                  labels=names(data), cex.axis=.7, gap=3, ylab=c("Histogram of missing data","Pattern"))
+
+# Check for high correlation
+res <- cor(ypll.impute)
+
+# Save to CSV for conditional formatting in Excel
+write.csv(res, file = "correlation.csv")
+
+# Plot each of the variables in the dataset in historgram and boxplot
+# for distribution, skew and outliers
+for(o in 1:dim(ypll.impute)[2]) {
+  hist(ypll.impute[,o], main=colnames(ypll.impute[o]))
+  boxplot(ypll.impute[,o], main=colnames(ypll.impute[o]))  
+}
+
+# Fit a decision tree to see variable importance
+mytree <- tree(YPLL.Rate~., data=ypll.impute)
+plot(mytree); text(mytree, pretty=0)
+summary(mytree)
+
+# Do bagging to assess variable importance
+bag <- randomForest(YPLL.Rate~., data=ypll.impute, mtry=15, importance=TRUE)
+varImpPlot(bag)
+plot(bag)
+
+# Check for a linear relationship in the data for ANN
+fit <- lm(YPLL.Rate~., data=ypll.impute)
+gf_point(fit$fitted.values ~ ypll.impute$YPLL.Rate, color=laxMaroon) %>% 
+  gf_labs(
+    title = "YPLL Rate vs. Fitted Values",
+    x = "YPLL Rate",
+    y = "Fitted Values"
+  )
+```
+
+
+```{r Model Selection, include=FALSE}
+# Create the robust regression models based on the predictors that had the most
+# significance in the full model. Final model is the full model
+rlmModel1 <- (YPLL.Rate ~ PctFreeLunch)
+rlmModel2 <- (YPLL.Rate ~ PctFreeLunch + median.household.income)
+rlmModel3 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes)
+rlmModel4 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity)
+rlmModel5 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy)
+rlmModel6 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy + Population)
+rlmModel7 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy + Population + PctUnder18)
+rlmModel8 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy + Population + PctUnder18 + PctDriveAlone)
+rlmModel9 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy + Population + PctUnder18 + PctDriveAlone + PctOver65)
+rlmModel10 <- (YPLL.Rate ~ PctFreeLunch + median.household.income + PctDiabetes + Physical.Inactivity +
+                PctChildIlliteracy + Population + PctUnder18 + PctDriveAlone + PctOver65 + HIV.rate)
+rlmModel11 <- (YPLL.Rate ~ .)
+
+allRlmModels <- list(rlmModel1, rlmModel2, rlmModel3, rlmModel4, rlmModel5, rlmModel6, rlmModel7, rlmModel8, 
+                    rlmModel9, rlmModel10, rlmModel11)
+
+# Store the number of models, we will use each model above with Tukey and Huber methods
+nBisquareModels <- length(allRlmModels)
+nHuberModels <- length(allRlmModels)
+
+nBagModels <- 1 # Doing a single bagging model
+
+# Set up the tuning parameter lists for Boosting
+depthBoost <- c(1, 2, 3, 4)
+treesBoost <- c(2000, 4000, 6000, 8000)
+
+# Calculate the total number of Boost models
+nBoostModels <- length(depthBoost) * length(treesBoost)
+
+# Number of Random Forest models
+nRfModels <- 1
+
+# Set up the ANN models
+nnDecayRate <- seq(.2, 3, by = .2)
+nnSizes <- 1:5
+
+# Calculate the number of ANN models
+nAnnModels <- length(nnDecayRate) * length(nnSizes)
+
+# Calculate the total number of models
+nmodels <- nBisquareModels + nHuberModels + nBagModels + nBoostModels + nRfModels + nAnnModels
+
+# Set the random seed
+set.seed(255)
+
+##################################
+## Entire model-fitting process ##
+
+xy.in <- ypll.impute # Set the data set to use in the inner loop
+n.in <- dim(xy.in)[1] # Get a count of the number of records
+ncv <- 10 # Ten fold cross validation
+
+# Set the number of groups
+if ((n.in%%ncv) == 0) {
+    groups.in <- rep(1:ncv,floor(n.in/ncv)) } else {
+    groups.in <- c(rep(1:ncv,floor(n.in/ncv)),(1:(n.in%%ncv)))
+}
+
+# Randomize the groups
+cvgroups.in <- sample(groups.in, n.in)
+
+# Create a matrix to hold the results of the classification
+# One column for each model
+allpredictedCV.in <- matrix(,ncol=nmodels, nrow=n.in)
+
+for (i in 1:ncv) { # Loop through the 10-fold CV
+
+  train.in = (cvgroups.in != i)
+  test.in = (cvgroups.in == i)
+  
+  for (m in 1:nBisquareModels) { # Loop through each Robust regression models
+    fit.bisquare <- rlm(formula = allRlmModels[[m]], data=xy.in, subset=train.in, psi=psi.bisquare, maxit=50)
+    fit.huber <- rlm(formula = allRlmModels[[m]], data=xy.in, subset=train.in, psi=psi.huber, maxit=50)
+    
+    # Predict new values for the test data
+    allpredictedCV.in[test.in, m] <- predict(fit.bisquare, xy.in[test.in,])
+    allpredictedCV.in[test.in, m+nBisquareModels] <- predict(fit.huber, xy.in[test.in,])
+  }
+  
+  # Perform Bagging and predict YPLL for the current test data
+  ypll.bag <- randomForest(YPLL.Rate ~ ., data=xy.in, subset=train.in, mtry=15, importance=TRUE)
+
+  # Predict new values for the test data
+  allpredictedCV.in[test.in, nBisquareModels+nHuberModels+1] <- predict(ypll.bag, newdata=xy.in[test.in,])
+  
+  # Set up a counter to help store the results of the Boosting
+  # in the appropriate columns of allpredictedcv10
+  counter <- nBisquareModels + nHuberModels + nBagModels + 1
+  
+  # Perform Boosting and predict low for the current test data
+  for(aa in depthBoost) { # Loop through each of the depth values
+    for(bb in treesBoost) { # Loop through each of the number of trees
+      
+      # Create the boosted decision tree model
+      ypll.boost <- gbm(YPLL.Rate ~ ., data=xy.in[train.in,], distribution="gaussian", n.trees=bb,
+                        shrinkage=0.0005, interaction.depth=aa)
+      
+      # Predict new values for the test data
+      allpredictedCV.in[test.in, counter] <- predict(ypll.boost, newdata=xy.in[test.in,], n.trees=bb)
+      
+      # Increment the counter to move to the next column
+      counter <- counter + 1
+    }
+  }
+  
+  # Perform Random Forests and predict YPLL for the current test data
+  ypll.rf <- randomForest(YPLL.Rate ~ ., data=xy.in, subset=train.in, mtry=5, importance=TRUE)
+  allpredictedCV.in[test.in, nmodels-nAnnModels] <- predict(ypll.rf, newdata=xy.in[test.in,])
+  
+  # Perform Artificial Neural Network modeling and predict YPLL for current test data
+  # Scale the training and validation data
+  nnTrain.std <- scale(xy.in[train.in,2:15])
+  nnTest.std <- scale(xy.in[test.in,2:15], center=attr(nnTrain.std, "scaled:center"), 
+                                 scale = attr(nnTrain.std, "scaled:scale"))
+
+  nnTrain.std <- data.frame(YPLL.Rate = xy.in[train.in, 1], nnTrain.std)
+  nnTest.std <- data.frame(YPLL.Rate = xy.in[test.in, 1], nnTest.std)
+  
+  # Counter to help store predictions in the correct column
+  nnCounter = nmodels - nAnnModels + 1
+  
+  for(ss in nnSizes) { # Loop through each of the hidden node sizes
+    for(dd in nnDecayRate) { # Loop through each of the decay rates
+      
+      ypll.ann = nnet(YPLL.Rate ~ ., data = nnTrain.std, size = ss, decay = dd, 
+                      maxit = 200, linout = TRUE, trace = FALSE)
+      allpredictedCV.in[test.in, nnCounter] <- predict(ypll.ann, nnTest.std)
+      
+      # Increment the counter
+      nnCounter <- nnCounter + 1
+    }
+  }
+}
+
+# Place-holder for results
+allmodelCV.in <- rep(NA, nmodels)
+
+# Compute and store the CV(10) values
+for (m in 1:nmodels) { 
+  allmodelCV.in[m] <- mean((allpredictedCV.in[,m]-xy.in$YPLL.Rate)^2)
+}
+
+# Select best model based on minimum CV(10)
+bestmodel.in <- (1:nmodels)[order(allmodelCV.in)[1]]
+
+# State which is best model and minimum CV(10) value
+bestMSE <- min(allmodelCV.in)
+bestmodel.in; bestMSE
+
+# Assessment
+CV = sum((allpredictedCV.in[,bestmodel.in] - ypll.impute$YPLL.Rate)^2)/n.in; CV
+R2 <- 1 - n.in*CV/sum((ypll.impute$YPLL.Rate - mean(ypll.impute$YPLL.Rate))^2); R2
+```
+
+
+```{r Best Model, include=FALSE, echo=FALSE}
+## Fitting the final model - after the "best" model is selected in B.
+## Using all available data.
+if (bestmodel.in <= nBisquareModels) {  # Best is one of Tukey robust models
+  bestfit = rlm(formula = allRlmModels[[bestmodel.in]],data=xy.in, psi=psi.bisquare, maxit=50)
+  
+} else if (bestmodel.in <= nBisquareModels+nHuberModels) {  # Best is one of Huber robust models
+
+  bestfit = rlm(formula = allRlmModels[[bestmodel.in]],data=xy.in, psi=psi.huber, maxit=50)
+
+} else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels) {  # Best is the Bagged decision tree
+  
+  bestfit = randomForest(YPLL.Rate ~ ., data=xy.in, mtry=15, importance=TRUE)
+  
+} else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels+nBoostModels) { # Best is Boosted decision tree
+    # Determine which of the Boosted models was the best
+    boostModel <- bestmodel.in - nBisquareModels - nHuberModels - nBagModels
+    
+    # Determine which number of trees was used in the best Boosted model
+    bestTrees <- case_when(
+      boostModel %% length(treesBoost) == 1 ~ 2000,
+      boostModel %% length(treesBoost) == 2 ~ 4000,
+      boostModel %% length(treesBoost) == 3 ~ 6000,
+      boostModel %% length(treesBoost) == 0 ~ 8000,
+      TRUE ~ NaN
+    )
+    
+    # Determine which interaction depth was used in the best Boosted model
+    bestDepth <- depthBoost[ceiling(boostModel/length(treesBoost))]
+    
+    bestfit = boost <- gbm(YPLL.Rate~., data=xy.in, distribution="gaussian", n.trees=bestTrees, 
+                           shrinkage=.001, interaction.depth=bestDepth)
+    
+} else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels+nBoostModels+nRfModels) { 
+  
+  # Best is Random Forest decision tree
+  bestfit <- randomForest(YPLL.Rate~., data=xy.in, mtry=5, importance=TRUE)
+  
+} else { # Best is Artificial Neural Network
+  
+  # Calculate which of the ANN models was the winner
+  annModel <- bestmodel.in - nBisquareModels - nHuberModels - nBagModels - nBoostModels - nRfModels
+  
+  # Determine the Size and Decay parameters for that model
+  bestSize <- ceiling(annModel/length(nnDecayRate))
+  bestDecay <- nnDecayRate[annModel-((bestSize-1)*length(nnDecayRate))]
+  
+  # Scale the data set for fitting
+  xy.in.std <- data.frame(YPLL.Rate = xy.in[,1], scale(xy.in[2:15]))
+  
+  # Fit the best performing model
+  bestfit <- nnet(YPLL.Rate~., data=xy.in.std, size = bestSize, decay = bestDecay, 
+                      maxit = 200, linout = TRUE, trace = FALSE)
+}
+```
+
+
+```{r Double CV, include=FALSE, echo=FALSE}
+###################################################################
+##### Double cross-validation for modeling-process assessment #####				 
+###################################################################
+
+##### Model assessment OUTER shell #####
+fulldata.out <- ypll.impute
+k.out <- 10
+n.out <- dim(fulldata.out)[1]
+
+# Define the cross-validation splits 
+groups.out  <- c(rep(1:k.out,floor(n.out/k.out)))
+if(floor(n.out/k.out) != (n.out/k.out)) groups.out  <- c(groups.out, 1:(n.out%%k.out))
+
+# Set the random seed to 255
+set.seed(255)
+
+# Orders randomly
+cvgroups.out <- sample(groups.out, n.out)
+
+# Set up storage for predicted values from the double-cross-validation
+allpredictedCV.out <- rep(NA, n.out)
+
+# Set up storage to see what models are "best" on the inner loops
+allbestmodels <- rep(NA, k.out)
+
+# Loop through outer splits
+for (j in 1:k.out)  {
+  groupj.out <- (cvgroups.out == j)
+  
+  # Split the data into train and test sets
+  traindata.out <- fulldata.out[!groupj.out,]
+  validdata.out <- fulldata.out[groupj.out,]
+  
+  # Set the interior loop data set
+  xy.in = traindata.out
+  
+  ##### : : : : : : : : : #####
+  #############################
+  ##  Full modeling process  ##
+  #############################
+  
+  n.in <- dim(xy.in)[1] # Get a count of the number of records
+  ncv <- 10 # Ten fold cross validation
+  
+  # Set the number of groups
+  if ((n.in%%ncv) == 0) {
+      groups.in <- rep(1:ncv,floor(n.in/ncv)) } else {
+      groups.in <- c(rep(1:ncv,floor(n.in/ncv)),(1:(n.in%%ncv)))
+  }
+  
+  # Randomize the groups
+  cvgroups.in <- sample(groups.in, n.in)
+  
+  # Create a matrix to hold the results of the classification
+  # One column for each model
+  allpredictedCV.in <- matrix(,ncol=nmodels, nrow=n.in)
+  
+  for (i in 1:ncv) { # Loop through the 10-fold CV
+    
+    train.in = (cvgroups.in != i)
+    test.in = (cvgroups.in == i)
+    
+    for (m in 1:nBisquareModels) { # Loop through each Robust regression models
+      # Fit the models
+      fit.bisquare <- rlm(formula = allRlmModels[[m]], data=xy.in, subset=train.in, psi=psi.bisquare, maxit=50)
+      fit.huber <- rlm(formula = allRlmModels[[m]], data=xy.in, subset=train.in, psi=psi.huber, maxit=50)
+      
+      # Predict new values for the test data
+      allpredictedCV.in[test.in, m] <- predict(fit.bisquare, xy.in[test.in,])
+      allpredictedCV.in[test.in, m+nBisquareModels] <- predict(fit.huber, xy.in[test.in,])
+    }
+    
+    # Perform Bagging and predict YPLL for the current test data
+    ypll.bag <- randomForest(YPLL.Rate~., data=xy.in, subset=train.in, mtry=15, importance=TRUE)
+  
+    # Predict new values for the test data
+    allpredictedCV.in[test.in, nBisquareModels+nHuberModels+1] <- predict(ypll.bag, newdata=xy.in[test.in,])
+    
+    # Set up a counter to help store the results of the Boosting
+    # in the appropriate columns of allpredictedcv10
+    counter <- nBisquareModels + nHuberModels + nBagModels + 1
+    
+    # Perform Boosting and predict low for the current test data
+    for(aa in depthBoost) { # Loop through each of the depth values
+      for(bb in treesBoost) { # Loop through each of the number of trees
+        # Create the boosted decision tree model
+        ypll.boost <- gbm(YPLL.Rate~., data=xy.in[train.in,], distribution="gaussian", n.trees=bb,
+                          shrinkage=0.0005, interaction.depth=aa)
+        
+        # Predict new values for the test data
+        allpredictedCV.in[test.in, counter] <- predict(ypll.boost, newdata=xy.in[test.in,], n.trees=bb)
+        
+        # Increment the counter to move to the next column
+        counter <- counter + 1
+      }
+    }
+    
+    # Perform Random Forests and predict YPLL for the current test data
+    ypll.rf <- randomForest(YPLL.Rate~., data=xy.in, subset=train.in, mtry=5, importance=TRUE)
+    allpredictedCV.in[test.in, nmodels - nAnnModels] <- predict(ypll.rf, newdata=xy.in[test.in,])
+    
+    # Perform Artificial Neural Network modeling and predict YPLL for current test data
+    # Scale the training and validation data
+    nnTrain.std <- scale(xy.in[train.in,2:15])
+    nnTest.std <- scale(xy.in[test.in,2:15], center=attr(nnTrain.std, "scaled:center"), 
+                                   scale = attr(nnTrain.std, "scaled:scale"))
+  
+    nnTrain.std <- data.frame(YPLL.Rate = xy.in[train.in, 1], nnTrain.std)
+    nnTest.std <- data.frame(YPLL.Rate = xy.in[test.in, 1], nnTest.std)
+    
+    # Counter to help store predictions in the correct column
+    nnCounter = nmodels - nAnnModels + 1
+    
+    for(ss in nnSizes) { # Loop through each of the hidden node sizes
+      for(dd in nnDecayRate) { # Loop through each of the decay rates
+        
+        ypll.ann = nnet(YPLL.Rate ~ ., data = nnTrain.std, size = ss, decay = dd, 
+                        maxit = 200, linout = TRUE, trace = FALSE)
+        allpredictedCV.in[test.in, nnCounter] <- predict(ypll.ann, nnTest.std)
+        
+        # Increment the counter
+        nnCounter <- nnCounter + 1
+      }
+    }
+  } # End inner model selection
+  
+  # Place-holder for results
+  allmodelCV.in <- rep(NA, nmodels)
+  
+  # Compute and store the CV(10) values
+  for (m in 1:nmodels) { 
+    allmodelCV.in[m] <- mean((allpredictedCV.in[,m]-xy.in$YPLL.Rate)^2)
+  }
+  
+  # Select best model based on minimum CV(10) and predict values on the validation dataset 
+  # using the best model from this CV fold
+  bestmodel.in <- (1:nmodels)[order(allmodelCV.in)[1]]
+  
+  if (bestmodel.in <= nBisquareModels) {  # Best is one of Tukey robust models
+    
+    bestfit = rlm(formula = allRlmModels[[bestmodel.in]],data=xy.in, psi=psi.bisquare, maxit=50)
+    bestpred <- predict(bestfit, validdata.out)
+    
+  } else if (bestmodel.in <= nBisquareModels+nHuberModels) {  # Best is one of Huber robust models
+    
+    bestfit = rlm(formula = allRlmModels[[bestmodel.in]],data=xy.in, psi=psi.huber, maxit=50)
+    bestpred = predict(bestfit, validdata.out)
+    
+  } else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels) {  # Best is the Bagged decision tree
+    
+    bestfit = randomForest(YPLL.Rate ~ ., data=xy.in, mtry=15, importance=TRUE)
+    bestpred = predict(bestfit, newdata=validdata.out)
+    
+  } else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels+nBoostModels) { # Best is Boosted decision tree
+    
+      # Determine which of the Boosted models was the best
+      boostModel <- bestmodel.in - nBisquareModels - nHuberModels - nBagModels
+      
+      # Determine which number of trees was used in the best Boosted model
+      bestTrees <- case_when(
+        boostModel %% length(treesBoost) == 1 ~ 2000,
+        boostModel %% length(treesBoost) == 2 ~ 4000,
+        boostModel %% length(treesBoost) == 3 ~ 6000,
+        boostModel %% length(treesBoost) == 0 ~ 8000,
+        TRUE ~ NaN
+      )
+      
+      # Determine which interaction depth was used in the best Boosted model
+      bestDepth <- depthBoost[ceiling(boostModel/length(treesBoost))]
+      
+      # Fit the best Boosted model and predict based on the validation data
+      bestfit = boost <- gbm(YPLL.Rate~., data=xy.in, distribution="gaussian", n.trees=bestTrees, 
+                             shrinkage=.0005, interaction.depth=bestDepth)
+      bestpred <- predict(bestfit, newdata=validdata.out, n.trees=bestTrees)
+      
+  } else if (bestmodel.in <= nBisquareModels+nHuberModels+nBagModels+nBoostModels+nRfModels) { 
+    # Best is Random Forest decision tree
+    # Fit the best Random Forest model and predict based on the validation data
+    bestfit <- randomForest(YPLL.Rate~., data=xy.in, mtry=5, importance=TRUE)
+    bestpred <- predict(bestfit, newdata=validdata.out)
+    
+  } else {
+    annModel <- bestmodel.in - nBisquareModels - nHuberModels - nBagModels - nBoostModels - nRfModels
+  
+    bestSize <- ceiling(annModel/length(nnDecayRate))
+    bestDecay <- nnDecayRate[annModel-((bestSize-1)*length(nnDecayRate))]
+    
+    # Scale the data sets and convert back to data frames
+    xy.in.std <- scale(xy.in[,2:15])
+    validdata.out.std <- scale(validdata.out[,2:15], center = attr(xy.in.std, "scaled:center"),
+                               scale = attr(xy.in.std, "scaled:scale"))
+    
+    xy.in.std <- data.frame(YPLL.Rate = xy.in[,1], xy.in.std)
+    validdata.out.std <- data.frame(YPLL.Rate = validdata.out[,1], validdata.out.std)
+    
+    bestfit <- nnet(YPLL.Rate~., data=xy.in.std, size = bestSize, decay = bestDecay, 
+                        maxit = 200, linout = TRUE, trace = FALSE)
+    bestpred <- predict(bestfit, newdata=validdata.out.std)
+  }
+  
+  #############################
+  ## End of modeling process ##
+  #############################
+  ##### : : : : : : : : : #####
+
+  ### Resulting in bestmodel.in ###
+  
+  # Store the best model for this CV fold
+  allbestmodels[j] <- bestmodel.in
+  
+  # Store the predicted values for this CV fold
+  allpredictedCV.out[groupj.out] <- bestpred
+}
+
+# Assessment
+CV.out = sum((allpredictedCV.out - fulldata.out$YPLL.Rate)^2)/n.out; CV.out
+R2.out <- 1 - n.out*CV.out/sum((fulldata.out$YPLL.Rate - mean(fulldata.out$YPLL.Rate))^2); R2.out
+```

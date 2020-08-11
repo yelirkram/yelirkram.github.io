@@ -19,6 +19,7 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 * [Foundations of Data Science](#foundations-of-data-science)
 * [Statistical Methods](#statistical-methods)
 * [Programming for Data Science](#programming-for-data-science)
+* [Data Warehousing](#data-warehousing)
 * [Big Data High-Performance Computing](#big-data-high-performance-computing)
 * [Communicating About Data](#communicating-about-data)
 * [Data Mining & Machine Learning](#data-mining--machine-learning)
@@ -72,11 +73,11 @@ I developed a report for a bank with recommendations on using logistic regressio
 The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyze the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
 * [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/ds710/Final_Project_R.pdf)
 * [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
-* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/ds710/tesla_autonomy_100_tweets.csv)
-* [Parsed data for analysis in R. (CSV)](/projects/ds710/tesla_autonomy_tweets.csv)
+* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/projects/ds710/tesla_autonomy_100_tweets.csv)
+* [Parsed data for analysis in R. (csv)](/projects/ds710/tesla_autonomy_tweets.csv)
 * [R script containing the R code I used to analyze the data from Python (rmd)](/projects/ds710/Final_Project_R.Rmd)
 
-### DS 715 Data Warehousing
+### Data Warehousing
 * Collected, cleaned, and prepared data.
 * Evaluated data in terms of source, volume, frequency, and flow.
 * Identified and classified relevant variables for data science tasks.
@@ -90,7 +91,7 @@ The final project was an opportunity to apply what I had learned to answer a que
 * Used tools and software such as Hadoop, Pig, Hive, and Python to compare large data-processing tasks using cloud-computing services.
 
 **Final Project - PGA Tour Stats with Hive**  
-I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](https://www.kaggle.com/bradklassen/pga-tour-20102018-data) to answer a number of queries using Hive on Hortonworks.
+I used two datasets from the PGA Tour Golf Data by Brad Klassen on Kaggle to answer a number of queries using Hive on Hortonworks.
 * [Report (pdf)](/projects/ds730/Final_Problem_3.pdf)
 * [Queries in HiveQL (q)](/projects/ds730/prob3.q)
 

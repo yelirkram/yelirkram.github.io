@@ -39,7 +39,7 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 
 **Final Project - Fargo Health Group Forecasting**  
 My final project for this course was to apply the data science skills acquired in this class using the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics," to perform clean up the datasets, perform analysis, and generate a recommended course of action as a consultant to the Fargo Health Group.  
-* [Report (pdf)](/projects/FinalProjectPart02_DS700_Riley.pdf)
+* [Report (pdf)](/projects/ds700/FinalProjectPart02_DS700_Riley.pdf)
 * [Narrated client presentation (YouTube)](https://youtu.be/vxM0XxPrKfs)
 
 ### Statistical Methods
@@ -55,7 +55,7 @@ My final project for this course was to apply the data science skills acquired i
 
 **Final Project - Bank Loan Approval Optimization Report**  
 I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for dual goals, and summary report with recommendations.
-* [Report (pdf)](/projects/Bank_Loan_Approval_Optimization_Report.pdf)
+* [Report (pdf)](/projects/ds705/710Bank_Loan_Approval_Optimization_Report.pdf)
 
 ### Programming for Data Science
 * Used Python and R to analyze real-world data.
@@ -70,11 +70,11 @@ I developed a report for a bank with recommendations on using logistic regressio
 
 **Final Project - Analysis of Tesla Autonomy Day Tweets Sentiment**  
 The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyze the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
-* [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/Final_Project_R.pdf)
-* [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/Mark%20%Riley%20%Final%20%Project.ipynb)
-* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/tesla_autonomy_100_tweets.csv)
+* [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/ds710/Final_Project_R.pdf)
+* [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
+* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/project/ds710/tesla_autonomy_100_tweets.csv)
 * [Parsed data for analysis in R. (CSV)](/projects/tesla_autonomy_tweets.csv)
-* [R script containing the R code I used to analyze the data from Python (rmd)](/projects/Final%20%Project_R.Rmd)
+* [R script containing the R code I used to analyze the data from Python (rmd)](/projects/ds710/Final_Project_R.Rmd)
 
 ### DS 715 Data Warehousing
 * Collected, cleaned, and prepared data.
@@ -91,8 +91,8 @@ The final project was an opportunity to apply what I had learned to answer a que
 
 **Final Project - PGA Tour Stats with Hive**  
 I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](https://www.kaggle.com/bradklassen/pga-tour-20102018-data) to answer a number of queries using Hive on Hortonworks.
-* [Report (pdf)](/projects/Final%20%Problem%20%3.pdf)
-* [Queries in HiveQL (q)](/projects/prob3.q)
+* [Report (pdf)](/projects/ds730/Final_Problem_3.pdf)
+* [Queries in HiveQL (q)](/projects/ds730/prob3.q)
 
 ### Communicating About Data
 * Wrote, formatted, and presented technical prose.
@@ -100,8 +100,8 @@ I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](http
 * Facilitated data-informed discussions through listening, questioning, and presenting.
 
 **Final Project - Executive Summary and Visual Resumes**  
-* [Executive summary of the Cerner 2018 Annual Report with Tableau visualizations (pdf)](/projects/Activity_3_Mark_Riley_DS735_Fall%20%2019.pdf)
-* [Two visual resumes for two data science job descriptions (pdf)](/projects/Assignment%20%3.pdf)
+* [Executive summary of the Cerner 2018 Annual Report with Tableau visualizations (pdf)](/projects/ds735/Activity_3_Mark_Riley_DS735.pdf)
+* [Two visual resumes for two data science job descriptions (pdf)](/projects/ds735/Assignment_3_Mark_Riley.pdf)
 
 ### Data Mining & Machine Learning
 * Implemented association rules & clustering algorithms.
@@ -111,8 +111,8 @@ I used two datasets from the [PGA Tour Golf Data by Brad Klassen on Kaggle](http
 
 **Final Project - Predicting Years of Potential Life Lost (YPLL)**  
 Analysis to determine if I could accurately predict the Years of Potential Life Lost (YPLL) rate per 100,000 people in United States (US) Counties and the District of Columbia (DC) using the dataset [US County Premature Mortality Rate by RoyXss on Kaggle](https://www.kaggle.com/royxss/us-county-premature-mortality-rate). I used robust regression, bagging, boosting, random forest, and artificial neural networks in R.
-* [Report (pdf)](/projects/Mark%20%Riley%20%Final%20%Project%20%DS740%20%20190808.pdf)
-* [Code (rmd)](/projects/DS740_SU19_Final_Project_Mark_Riley.Rmd)
+* [Report (pdf)](/projects/ds740/Mark_Riley_Final_Project_DS740.pdf)
+* [Code (rmd)](/projects/ds740/DS740_Final_Project_Mark_Riley.Rmd)
 
 ### Visualization & Unstructured Data Analysis
 * Created effective visuals to maximize readability, comprehension, and understanding of complex datasets.

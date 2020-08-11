@@ -39,7 +39,7 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 * Explained best practices that improve the effectiveness of data science projects and mitigate risks associated with such projects.
 
 **Final Project - Fargo Health Group Forecasting**  
-My final project for this course was to apply the data science skills acquired in this class using the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics," to perform clean up the datasets, perform analysis, and generate a recommended course of action as a consultant to the Fargo Health Group.  
+My final project for this course was to apply the data science skills acquired in this class to the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics." I cleaned the datasets, performed analysis, and generated a recommended course of action as a consultant to the Fargo Health Group.  
 * [Report (pdf)](/projects/ds700/FinalProjectPart02_DS700_Riley.pdf)
 * [Narrated client presentation (YouTube)](https://youtu.be/vxM0XxPrKfs)
 
@@ -47,15 +47,15 @@ My final project for this course was to apply the data science skills acquired i
 * Examined and summarize data numerically and graphically.
 * Given a data set and a question, chose the appropriate statistical procedure.
 * Verified conditions for statistical procedures.
-* Performed hypothesis tests and compute confidence intervals.
+* Performed hypothesis tests and computed confidence intervals.
 * Explored and modeled relationships among variables and used models to make predictions.
-* Used software package R to implement statistical analyses.
+* Used the software package R to implement statistical analyses.
 * Interpreted and critically evaluated statistical information and data-based arguments.
 * Effectively communicated the results of statistical analysis.
 * Used R Markdown to produce statistical reports and supported reproducible research.
 
 **Final Project - Bank Loan Approval Optimization Report**  
-I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for dual goals, and summary report with recommendations.
+I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for the dual goals, and authoring a summary report with recommendations.
 * [Report (pdf)](/projects/ds705/Bank_Loan_Approval_Optimization_Report.pdf)
 
 ### Programming for Data Science

@@ -3,7 +3,7 @@ I have 20 years of management and technology consulting experience, primarily in
 
 I am seeking a full-time job in the DC-metro area leading healthcare data science teams using my master's degree in data science and extensive healthcare technology management consulting career. I would prefer to work locally with up to 10% travel.
 
-HireM@rkRiley.com
+[HireM@rkRiley.com](mailto:HireM@rkRiley.com)
 
 ## Professional Links
 [<img src="/images/LI-In-Bug.png" width=118 height=100>](https://www.linkedin.com/in/rileymark/)

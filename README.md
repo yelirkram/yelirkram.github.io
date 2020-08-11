@@ -44,6 +44,9 @@ Bachelor of Business Administration - Information Systems Analysis & Design
 
 **Final Project - Fargo Health Group Forecasting**  
 My final project for this course was to apply the data science skills acquired in this class to the *Harvard Business Review* case study, "Fargo Health Group: Managing the Demand for Medical Examinations Using Predictive Analytics." I cleaned the datasets, performed analysis, and generated a recommended course of action as a consultant to the Fargo Health Group.  
+
+![Fargo Health Group Forecasting](/images/DS700.png)
+
 * [Report (pdf)](/projects/ds700/FinalProjectPart02_DS700_Riley.pdf)
 * [Narrated client presentation (YouTube)](https://youtu.be/vxM0XxPrKfs)
 
@@ -65,7 +68,10 @@ My final project for this course was to apply the data science skills acquired i
 * Used R Markdown to produce statistical reports and supported reproducible research.
 
 **Final Project - Bank Loan Approval Optimization Report**  
-I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for the dual goals, and authoring a summary report with recommendations.
+I developed a report for a bank with recommendations on using logistic regression to maximize the accuracy of approved loans and maximize bank profit. Tasks included data cleanup, data exploration, feature engineering, imputing missing data, model development, model optimization for the dual goals, and authoring a summary report with recommendations.  
+
+![Bank Loan Approval Optimization Report](/images/DS705.png)
+
 * [Report (pdf)](/projects/ds705/Bank_Loan_Approval_Optimization_Report.pdf)
 
 ---
@@ -86,7 +92,11 @@ I developed a report for a bank with recommendations on using logistic regressio
 * Followed best practices for documentation and readable code.
 
 **Final Project - Analysis of Tesla Autonomy Day Tweets Sentiment**  
-The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyze the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019. Deliverables included.
+The final project was an opportunity to apply what I had learned to answer a question that interested me by collecting and analyzing real-world data from Twitter. I chose to analyze the sentiment of tweets related to the “Tesla Autonomy Investor Day” event on April 22, 2019.
+
+![Analysis of Tesla Autonomy Day Tweets Sentiment](/images/DS710.png)
+
+Deliverables included:
 * [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/ds710/Final_Project_R.pdf)
 * [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
 * [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/projects/ds710/tesla_autonomy_100_tweets.csv)
@@ -134,9 +144,19 @@ I used two datasets from the PGA Tour Golf Data by Brad Klassen on Kaggle to ans
 * Helped non-technical professionals visualize, explore, and act on data science findings.
 * Facilitated data-informed discussions through listening, questioning, and presenting.
 
-**Final Project - Executive Summary and Visual Resumes**  
-* [Executive summary of the Cerner 2018 Annual Report with Tableau visualizations (pdf)](/projects/ds735/Activity_3_Mark_Riley_DS735.pdf)
-* [Two visual resumes for two data science job descriptions (pdf)](/projects/ds735/Assignment_3_Mark_Riley.pdf)
+**Project - Annual Report**  
+For this project I created an executive summary of the Cerner 2018 annuual report that anyone can pick up, read, and understand using key information from the original annual report. I used Tableau for visualizations.
+
+![Annual Report](/images/DS735-1.png)
+
+* [Report (pdf)](/projects/ds735/Activity_3_Mark_Riley_DS735.pdf)
+
+**Project - Visual Résumés**  
+I created two convincing and accessible data visual résumés (graphics) that represented my skillset to two different job prospects/audiences. I created the graphics in Excel.
+
+![Visual Résumés](/images/DS735-2.png)
+
+* [Report (pdf)](/projects/ds735/Assignment_3_Mark_Riley.pdf)
 
 ### Data Mining & Machine Learning
 * Implemented association rules & clustering algorithms.
@@ -146,6 +166,9 @@ I used two datasets from the PGA Tour Golf Data by Brad Klassen on Kaggle to ans
 
 **Final Project - Predicting Years of Potential Life Lost (YPLL)**  
 Analysis to determine if I could accurately predict the Years of Potential Life Lost (YPLL) rate per 100,000 people in United States (US) Counties and the District of Columbia (DC) using the dataset [US County Premature Mortality Rate by RoyXss on Kaggle](https://www.kaggle.com/royxss/us-county-premature-mortality-rate). I used robust regression, bagging, boosting, random forest, and artificial neural networks in R.
+
+![YPLL](/images/DS740.png)
+
 * [Report (pdf)](/projects/ds740/Mark_Riley_Final_Project_DS740.pdf)
 * [Code (rmd)](/projects/ds740/DS740_Final_Project_Mark_Riley.Rmd)
 
@@ -163,15 +186,24 @@ Analysis to determine if I could accurately predict the Years of Potential Life 
 
 **Visualization Project**  
 Created visualizations in Tableau to determine if there was a relationship between tweets done by Elon Musk, CEO of Tesla, on the following day’s Tesla stock (TSLA) trade volume between 2013 and 2016. I used two datasets from Kaggle, [Elon Musk's Tweets by Kaan Ulgen](https://www.kaggle.com/kulgen/elon-musks-tweets) and [Tesla Stock Price by Rolando P. Aguirre](https://www.kaggle.com/rpaguirre/tesla-stock-price).
+
+![Visualization Project](/images/DS745-1.png)
+
 * [Report (pdf)](/projects/ds745/Mark_Riley_Visualization_Project_DS745.pdf)
 
 **Network Analysis Project**  
 I performed analysis of an undirected, weighted network representing relationships among 54 confirmed members of a London street gang, 2005-2009. The network is undirected. Using R I analyzed gang member prominence from their degree, closeness, and betweenness metrics, created a network diagram, performed community detection, and created exponential random graph models (ERGM). The data source was [London Gang on UCINET Software](https://sites.google.com/site/ucinetsoftware/datasets/covert-networks/londongang).
+
+![Network Analysis Project](/images/DS745-2.png)
+
 * [Report (pdf)](/projects/ds745/Mark_Riley_DS745_Networking_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Networking_Project.Rmd)
 
 **Text Mining/Natural Language Processing Project**  
 I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch event using R and the rtweet package.
+
+![Text Mining Project](/images/DS745-3.png)
+
 * [Report (pdf)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.pdf)
 * [Code (rmd)](/projects/ds745/Mark_Riley_DS745_Text_Mining_Project.Rmd)
 
@@ -220,7 +252,10 @@ I researched and wrote a “deep dive” paper on a topic related to the use of 
 * [Report (pdf)](/projects/ds780/Assignment_1_DS780_Mark_Riley.pdf)
 
 **Project - Display of Information for Retail at Foot Locker, Inc.**  
-Created a presentation of data using dashboard to share with decision makers in the roles of CEO, store manager, and replenishment analyst (merchandiser) at Foot Locker. For sources I used the Foot Locker 2019 Annual report and a collection of trade and academic journals. 
+Created a presentation of data using dashboard to share with decision makers in the roles of CEO, store manager, and replenishment analyst (merchandiser) at Foot Locker. For sources I used the Foot Locker 2019 Annual report and a collection of trade and academic journals.
+
+![Dashboards Project](/images/DS780.png)
+
 * [Report (pdf)](/projects/ds780/Assignment_3_DS780_Mark_Riley.pdf)
 
 ---
@@ -237,4 +272,7 @@ Created a presentation of data using dashboard to share with decision makers in 
 * Prepared a professional report of their my and effectively communicated my findings to a non-technical audience.
 
 My capstone paper's title was, "Applying Predictive Analytic Capabilities for CardioMEMS Patients." This analysis aimed to determine if I could predict four adverse heart failure-related events by employing supervised classification algorithms with interpretable results using a combination of data from the CardioMEMS devices and patients’ electronic health records. The adverse health events in scope for this analysis were all-cause hospitalizations, heart failure-related hospitalizations, use of intravenous diuretic therapy outside of a hospitalization, and changes to pulmonary artery diastolic (PAD) pressure thresholds.
+
+![Capstone Project](/images/DS785.png)
+
 * [Report and code repository on GitHub](https://github.com/yelirkram/Applying-Predictive-Analytic-Capabilities-for-CardioMEMS-Patients)

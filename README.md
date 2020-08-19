@@ -6,7 +6,7 @@ He has worked closely with client CIOs, CFOs, and CEOs to plan, receive board ap
 Mark has successfully lead projects involving strategic planning, technology roadmap development, software evaluation and selection, software system implementation planning, software system implementation, IT governance, program and project management, data migration, data archiving, database design and development, custom software design development, and the software development life cycle (SDLC). He is a certified Project Management Professional (PMP) from the Project Management Institute (PMI).
 
 [HireM@rkRiley.com](mailto:HireM@rkRiley.com)  
-[Résumé](/Mark%20%E.%20%Riley%20%Resume%20%20200818.pdf)
+[Résumé](Mark_E_Riley_Resume_20200818.pdf)
 
 ## Professional Links
 [<img src="/images/LI-In-Bug.png" width=118 height=100>](https://www.linkedin.com/in/rileymark/)

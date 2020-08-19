@@ -1,9 +1,12 @@
-# Mark E. Riley, PMP
-I have 20 years of management and technology consulting experience, primarily in the healthcare provider industry. My experience has included strategic planning, technology roadmap development, software evaluation and selection, software system implementation planning, software system implementation, IT governance, program and project management, data migration, data archiving, database design and development, custom software design development, and the software development life cycle (SDLC). I am certified Project Management Professional (PMP) from Project Management Institute (PMI).
+# Mark E. Riley, PMP (He/Him/His)
+Mark has 20 years of management and technology consulting experience, primarily in the healthcare provider industry. He is seeking a full-time job in the DC-metro area leading healthcare data science teams using his master's degree in data science and extensive healthcare technology management consulting career.
 
-I am seeking a full-time job in the DC-metro area leading healthcare data science teams using my master's degree in data science and extensive healthcare technology management consulting career. I would prefer to work locally with up to 10% travel.
+He has worked closely with client CIOs, CFOs, and CEOs to plan, receive board approval, and implement successful projects. He has experience leading large teams, including remotely and spread across the country. Mark's passions are technology, data, and making healthcare more effective and affordable for everyone.
 
-[HireM@rkRiley.com](mailto:HireM@rkRiley.com)
+Mark has successfully lead projects involving strategic planning, technology roadmap development, software evaluation and selection, software system implementation planning, software system implementation, IT governance, program and project management, data migration, data archiving, database design and development, custom software design development, and the software development life cycle (SDLC). He is a certified Project Management Professional (PMP) from the Project Management Institute (PMI).
+
+[HireM@rkRiley.com](mailto:HireM@rkRiley.com)  
+[Résumé](Mark%20%E.%20%Riley%20%Resume%20%20200818.pdf)
 
 ## Professional Links
 [<img src="/images/LI-In-Bug.png" width=118 height=100>](https://www.linkedin.com/in/rileymark/)

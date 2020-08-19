@@ -100,10 +100,10 @@ The final project was an opportunity to apply what I had learned to answer a que
 ![Analysis of Tesla Autonomy Day Tweets Sentiment](/images/DS710.png)
 
 Deliverables included:
-* [Executive summary reporting my question, analysis, and results non-technically. (pdf)](/projects/ds710/Final_Project_R.pdf)
-* [Python notebook used to gather data from Twitter & process it for analysis in R. (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
-* [Data from 100 tweets, along with any variables I computed about the tweets. (csv)](/projects/ds710/tesla_autonomy_100_tweets.csv)
-* [Parsed data for analysis in R. (csv)](/projects/ds710/tesla_autonomy_tweets.csv)
+* [Executive summary reporting my question, analysis, and results non-technically (pdf)](/projects/ds710/Final_Project_R.pdf)
+* [Python notebook used to gather data from Twitter & process it for analysis in R (ipynb)](/projects/ds710/Mark_Riley_Final_Project.ipynb)
+* [Data from 100 tweets, along with any variables I computed about the tweets (csv)](/projects/ds710/tesla_autonomy_100_tweets.csv)
+* [Parsed data for analysis in R (csv)](/projects/ds710/tesla_autonomy_tweets.csv)
 * [R script containing the R code I used to analyze the data from Python (rmd)](/projects/ds710/Final_Project_R.Rmd)
 
 ---

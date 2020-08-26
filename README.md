@@ -221,7 +221,7 @@ I performed sentiment analysis of tweets regarding the Tesla Cybertruck launch e
 * Interpreted and applied a professional code of ethics relevant to the data science profession.
 * Interpreted the activities and choices of others within an ethical framework and determined an appropriate action based on standards of professional conduct within computer science.
 
-**Final Project - Ethical Analysis of Project Nightingale**
+**Final Project - Ethical Analysis of Project Nightingale**  
 I performed an ethical analysis of Project Nightingale, a joint venture between Ascension and Google that began in November of 2019. I outlined two clear options/perspectives, each of which was supported by different ethical frameworks or moral theories, which considered a relevant code of professional ethics.
 * [Report (pdf)](/projects/ds760/DS760_Long_Paper_Case_Analysis_Mark_Riley.pdf)
 
